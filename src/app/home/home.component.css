@@ -35,3 +35,7 @@ a{
     text-decoration: none;
     margin-left: 10px;
 }
+.error-message{
+    color: red;
+    display: block;
+}

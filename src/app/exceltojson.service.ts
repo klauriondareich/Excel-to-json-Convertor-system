@@ -9,6 +9,7 @@ export class ExceltojsonService {
 
   get_json_data = "";
   supported_formats = [".xlsx", ".xlsm", ".xlsb", ".xltx", ".xltm", ".xls", ".xlt", ".xls"]
+  alert_message = null
 
   constructor(private sanitizer: DomSanitizer) { }
 
@@ -17,15 +18,16 @@ export class ExceltojsonService {
       let isValid = file.name.endsWith(this.supported_formats.map(ext =>{
         return ext
       }));
+      console.log("isValid", isValid);
       if (isValid === true){
-        let work_book = null;
+        this.alert_message = null;
         const reader = new FileReader();
   
         reader.onload = (e) => {
           let data = reader.result;
           let rowObj = {};
           let key = null;
-    
+          let work_book = null;
   
           work_book = XLSX.read(data, { type: 'binary'});
           let get_strings = work_book.Strings;
@@ -39,6 +41,7 @@ export class ExceltojsonService {
         }
         reader.readAsBinaryString(file);
       }
+      else this.alert_message = "Your file format is not supported. Only excel formats are supported!"
     }
   }
 

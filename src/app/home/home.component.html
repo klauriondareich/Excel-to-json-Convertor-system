@@ -1,9 +1,10 @@
 <div  class="main-container">
     <div class="header-content">
+      <span *ngIf="this.exceltojson.alert_message" class="error-message">{{this.exceltojson.alert_message}}</span>
       <div>
         <label for="file-input">Upload your Excel file here ...</label> <br> <br>
         <input type="file" name="file" id="file-input" (change)="getFile($event)">
-      </div> <br> 
+      </div> <br>   
       <button (click)="generateJsonFile()" class="btn-style">Generate JSON</button>
       <a *ngIf="this.exceltojson.get_json_data !== ''" [href]="this.exceltojson.downloadJsonData()" class="btn-style" (click)="downloadNow()" [download]="this.file_name + '.json'">Download the file</a>
     </div>
