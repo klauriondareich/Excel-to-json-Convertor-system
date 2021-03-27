@@ -20,7 +20,6 @@ export class HomeComponent implements OnInit {
   
   getFile(event){
     this.file = event.target.files[0];
-    console.log(this.file)
     this.file_name = event.target.files[0].name;
     this.file_name = this.file_name.split(".")[0];
   }

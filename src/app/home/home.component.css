@@ -22,6 +22,8 @@ button,a{
     overflow: auto;
     color: #fbfbfb;
     padding-top: 10px;
+    padding-left: 30px;
+    color: #f47264;
 }
 .main-view{
     padding: 20px;
