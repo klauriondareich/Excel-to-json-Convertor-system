@@ -12,7 +12,8 @@ export class ExceltojsonService {
   alert_message = null;
 
   constructor(private sanitizer: DomSanitizer) { }
-
+  
+  // This func convert the Excel file to Json
   convertExcelToJson(file){
     if (file){
       let extension = file.name.split(".")[1];
@@ -35,12 +36,13 @@ export class ExceltojsonService {
     }
   }
 
+  // This func allows to download the json file generated
   downloadJsonData(){
     return this.sanitizer.bypassSecurityTrustUrl(`data:text/json;charset=utf-8,${encodeURIComponent(this.get_json_data)}`)
   }
 
+  // This func gets all the values of the Excel file
   getExcelInputs(work_book){
-    console.log("work_book", work_book);
     let sheetname = work_book.SheetNames;
     let Obj = {};
     let a19 = work_book.Sheets[sheetname].A19.v;
@@ -87,41 +89,33 @@ export class ExceltojsonService {
     let f29 = work_book.Sheets[sheetname].F29.v;
     let f30 = work_book.Sheets[sheetname].F30.v;
 
-
+    // ROW 1
     let item_number_1 = work_book.Sheets[sheetname].D20.v
     let descr_row_1 =  work_book.Sheets[sheetname].B20.v;
     let quantity_row_1 = work_book.Sheets[sheetname].D20.v;
     let unit_price_row_1 = work_book.Sheets[sheetname].E20.v;
     let total_row_1 = work_book.Sheets[sheetname].F20.v;
 
+    // ROW 2
     let item_number_2 = work_book.Sheets[sheetname].D21.v
     let descr_row_2 = work_book.Sheets[sheetname].B21.v;
     let quantity_row_2 = work_book.Sheets[sheetname].D21.v;
     let unit_price_row_2 = work_book.Sheets[sheetname].E21.v;
     let total_row_2 = work_book.Sheets[sheetname].F21.v;
 
+     // ROW 3
     let item_number_3 = work_book.Sheets[sheetname].D22.v 
     let descr_row_3 = work_book.Sheets[sheetname].B22.v;
     let quantity_row_3 = work_book.Sheets[sheetname].D22.v;
     let unit_price_row_3 = work_book.Sheets[sheetname].E22.v;
     let total_row_3 = work_book.Sheets[sheetname].F22.v;
 
+    // ROW 4
     let item_number_4 = work_book.Sheets[sheetname].D23.v
     let descr_row_4 = work_book.Sheets[sheetname].B23.v;
     let quantity_row_4 = work_book.Sheets[sheetname].D23.v;
     let unit_price_row_4 = work_book.Sheets[sheetname].E23.v;
     let total_row_4 = work_book.Sheets[sheetname].F23.v;
-
-
-
-
-    // let row5_qantity = work_book.Sheets[sheetname].D24.v;
-    // let row6_qantity = work_book.Sheets[sheetname].D25.v;
-    // let row7_qantity = work_book.Sheets[sheetname].D26.v;
-    // let row8_qantity = work_book.Sheets[sheetname].D27.v;
-    // let row9_qantity = work_book.Sheets[sheetname].D28.v;
-    // let row10_qantity = work_book.Sheets[sheetname].D29.v;
-    // let row11_qantity = work_book.Sheets[sheetname].D30.v;
 
     Obj["invoice_title"] =  b3;
     Obj["date"] =  {
@@ -132,9 +126,6 @@ export class ExceltojsonService {
       "field_name": f6,
       "value": f7
     };
-
-    // Obj[f4] =  f5;
-    // Obj[f6] =  f7;
     Obj["comment"] =  e9;
 
     // Company information
@@ -155,6 +146,7 @@ export class ExceltojsonService {
       "phone_number": b15,
       "email_address": b16
     }
+
     // SHIP TO  
     Obj["ship_to"] = {
       "header_title": d10,
@@ -164,6 +156,7 @@ export class ExceltojsonService {
       "phone_number": d15
     }
 
+    // Headers of the invoice table
     Obj["headers"] = {
       "item_number": a19,
       "description": b19,
@@ -172,27 +165,25 @@ export class ExceltojsonService {
       "total": f19
     };
 
-    // Obj["description"] = b19;
-    // Obj["qantity"] = d19;
-    // Obj["unit_price"] = e19;
-    // Obj["total"] = f19;
-
+    // Row 1 data
     Obj["row_1"] = {
       "item_number": item_number_1,
       "description": descr_row_1,
       "quantity": quantity_row_1,
       "unit_price": unit_price_row_1,
       "total": total_row_1
-    }
+    };
 
+    // Row 2 data
     Obj["row_2"] = {
       "item_number": item_number_2,
       "description": descr_row_2,
       "quantity": quantity_row_2,
       "unit_price": unit_price_row_2,
       "total": total_row_2
-    }
+    };
 
+    // Row 3 data
     Obj["row_3"] = {
       "item_number": item_number_3,
       "description": descr_row_3,
@@ -201,56 +192,44 @@ export class ExceltojsonService {
       "total": total_row_3
     }
 
+    // Row 4 data
     Obj["row_4"] = {
       "item_number": item_number_4,
       "description": descr_row_4,
       "quantity": quantity_row_4,
       "unit_price": unit_price_row_4,
       "total": total_row_4
-    }
-    Obj["remarks_payment_instructions"] = b25;
-    //  {
-    //   "1": b24,
-    //   "2": b25
-    // };
-    // Obj["payment_instructions"] =  b24;
-    // Obj["last_comment"] =  b25;
+    };
 
+    Obj["remarks_payment_instructions"] = b25;
     Obj["sub_total"] = {
       "field_name": e24,
       "value": f24
-    }
+    };
     Obj["discount"] = {
       "field_name": e25,
       "value": f25
-    }
+    };
     Obj["sub_total_discount"] = {
       "field_name": e26,
       "value": f26
-    }
+    };
     Obj["tax_rate"] = {
       "field_name": e27 + '(%)',
       "value": f27
-    }
+    };
     Obj["total_tax"] = {
       "field_name": e28,
       "value": f28
-    }
+    };
     Obj["shipping_handling"] = {
       "field_name": e29,
       "value": f29
-    }
+    };
     Obj["balance_due"] = {
       "field_name": e30,
       "value": f30
-    }
-    // Obj[e24] =  f24;
-    // Obj[e25] =  f25;
-    // Obj[e26] =  f26;
-    // Obj[e27 + '(%)'] =  f27;
-    // Obj[e28] =  f28;
-    // Obj[e29] =  f29;
-    // Obj[e30] =  f30;
+    };
 
     return Obj
   }
